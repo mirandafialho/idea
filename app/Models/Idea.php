@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Idea extends Model
+final class Idea extends Model
 {
     /** @use HasFactory<IdeaFactory> */
     use HasFactory;
@@ -23,7 +23,7 @@ class Idea extends Model
     ];
 
     protected $attributes = [
-        'status' => IdeaStatus::PENDING,
+        'status' => IdeaStatus::PENDING->value,
     ];
 
     public function user(): BelongsTo
