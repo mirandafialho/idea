@@ -1,6 +1,9 @@
 <?php
 
 use App\Models\User;
+use function Pest\Laravel\actingAs;
+use function Pest\Laravel\assertGuest;
+use function Pest\Laravel\delete;
 use function Pest\Laravel\post;
 
 dataset('user', [
@@ -19,4 +22,12 @@ it('can\'t log in with invalid password', function (User $user): void {
         'email' => $user->email,
         'password' => 'invalidpassword',
     ])->assertSessionHasErrors('password');
+})->with('user');
+
+it('logs out a user', function (User $user): void {
+    actingAs($user);
+
+    delete('/logout')->assertRedirect('/');
+
+    assertGuest();
 })->with('user');
